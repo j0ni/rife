@@ -1,0 +1,8 @@
+[package]
+name = "rife"
+version = "0.1.0"
+authors = ["J Irving <j@lollyshouse.ca>"]
+edition = "2018"
+
+[dependencies]
+piston_window = "0.80.0"
