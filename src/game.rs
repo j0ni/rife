@@ -9,7 +9,7 @@ const MOVING_PERIOD: f64 = 0.1;
 
 #[derive(Debug)]
 pub struct Game {
-    board: Board,
+    pub board: Board,
     waiting_time: f64,
 }
 

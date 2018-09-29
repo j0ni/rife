@@ -15,8 +15,8 @@ impl LCell {
 
 #[derive(Debug, Clone)]
 pub struct Board {
-    width: i32,
-    height: i32,
+    pub width: i32,
+    pub height: i32,
     pub state: HashSet<LCell>,
 }
 
