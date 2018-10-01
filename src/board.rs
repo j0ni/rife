@@ -1,7 +1,7 @@
 use std::cmp::Ordering;
 use std::collections::HashSet;
 
-#[derive(Debug, Clone, Eq, Hash)]
+#[derive(Debug, Clone, Eq, Hash, Copy)]
 pub struct LCell {
     pub x: i32,
     pub y: i32,
@@ -88,33 +88,24 @@ impl Board {
         nbs
     }
 
-    pub fn next_turn(&mut self) -> Board {
+    pub fn next_turn(&self) -> Board {
         let mut s: HashSet<LCell> = HashSet::new();
-
-        for c in &self.state {
-            let nbs = self.neighbours(&c);
-            let living_nb_cnt = nbs.intersection(&self.state).count();
-            if living_nb_cnt == 2 || living_nb_cnt == 3 {
-                s.insert(c.clone());
-            }
-        }
+        let mut board = self.clone();
 
         for m in 0..self.width {
             for n in 0..self.height {
                 let c = LCell::new(m, n);
-                if !self.state.contains(&c) {
-                    let nbs = self.neighbours(&c);
-                    let living_nb_cnt = nbs.intersection(&self.state).count();
-                    if living_nb_cnt == 3 {
-                        s.insert(c);
-                    }
+                let nbs = self.neighbours(&c);
+                let living_nb_cnt = nbs.intersection(&self.state).count();
+                if living_nb_cnt == 3 {
+                    s.insert(c);
+                } else if living_nb_cnt == 2 && self.state.contains(&c) {
+                    s.insert(c);
                 }
             }
         }
 
-        let mut board = self.clone();
         board.state = s;
-
         board
     }
 }
